@@ -1,7 +1,9 @@
 /* global alert, console, document, Excel, FileReader, Office, TextDecoder */
 
-let fileInput = null;
 
+
+let fileInput = null;
+let ColumnKeyName = "";
 
 Office.onReady((info) => {
   if (info.host === Office.HostType.Excel) {
@@ -47,12 +49,12 @@ async function UpgradeExcel() {
 
       let ExcelData = range.values;
       ExcelData = findInExcel(FormattedCSV, ExcelData);
-      
+
       let writingRange = currWorksheet.getRangeByIndexes(0, 0, ExcelData.length, ExcelData[0].length);
       writingRange.values = ExcelData;
-      
+
       await formatColumns(ExcelData, currWorksheet, context);
-      
+
       writingRange.format.autofitColumns();
       writingRange.format.autofitRows();
 
@@ -82,13 +84,44 @@ function ReadFile(file) {
 }
 
 //return an array with the first column's data, this because the unique values are often in the first column
-function TakeFirstColumn(currValue) {
-  let result = [];
-  for (let i = 1; i < currValue.length; i++) {
-    result.push(currValue[i][0]);
+function TakeKeyColumn(currValue) {
+  if (!currValue || currValue.length === 0) return [];
+
+  let keyColumnIndex = -1;
+
+  for (let c = 0; c < currValue[0].length; c++) {
+    if (String(currValue[0][c]).toLowerCase() === "matricola") {
+      keyColumnIndex = c;
+      break;
+    }
   }
-  return result;
+
+  if (keyColumnIndex === -1) {
+    for (let c = 0; c < currValue[0].length; c++) {
+      let seen = new Set();
+      let unique = true;
+
+      for (let r = 1; r < currValue.length; r++) {
+        if (seen.has(currValue[r][c])) {
+          unique = false;
+          break;
+        }
+        seen.add(currValue[r][c]);
+      }
+
+      if (unique) {
+        keyColumnIndex = c;
+        break;
+      }
+    }
+  }
+
+  if (keyColumnIndex === -1) return [];
+
+  return keyColumnIndex;
 }
+
+
 
 //split the CSV, it works with , and ; in order to create a matrix 2D
 function processCSV(ReaderResult) {
@@ -109,12 +142,12 @@ function formatForSplitting(rows) {
 //sets the cell format date, number or string
 function cellFormat(cell) {
   cell = cell.trim();
-  
+
   // control for the date, it can handle separator / and - and different setting for numbers 
   if (/^\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}$/.test(cell)) {
     return cell; // is mantained as a string
   }
-  
+
   let str = cell.toString();
   let num = Number(str);
   return isNaN(num) ? str : num;
@@ -123,63 +156,68 @@ function cellFormat(cell) {
 // search the content of CSV first column into the first column of file excel and write in it
 // decimals are summed and strings are overwritten by the one in cvs
 function findInExcel(FormattedCSV, ExcelData) {
-  let firstColumnCSV = TakeFirstColumn(FormattedCSV);
-  let firstColumnExcel = TakeFirstColumn(ExcelData);
+  let keyindexCSV = TakeKeyColumn(FormattedCSV);
+  let keyindexExcel = TakeKeyColumn(ExcelData);
+
+  let firstColumnCSV = FormattedCSV.slice(1).map(row => row[keyindexCSV]);
+  let firstColumnExcel = ExcelData.slice(1).map(row => row[keyindexExcel]);
 
   for (let csv = 0; csv < firstColumnCSV.length; csv++) {
-    if (firstColumnExcel.includes(firstColumnCSV[csv])) {
-      let indexRow = firstColumnExcel.indexOf(firstColumnCSV[csv]) + 1;
+    let excelRowIndex = firstColumnExcel.indexOf(firstColumnCSV[csv]);
 
-      for (let col = 1; col < ExcelData[0].length; col++) {
-        let csvValue = FormattedCSV[csv + 1][col];
+    if (excelRowIndex !== -1) {
+      let indexRow = excelRowIndex + 1; 
+
+      for (let col = 0; col < ExcelData[0].length; col++) {
+        let csvValue = FormattedCSV[csv + 1][col]; 
         let columnName = ExcelData[0][col];
 
-        // SALTA la colonna "Mese" - non aggiornarla
-        if (columnName.toString().toLowerCase().includes("mese")) {
-          continue;
-        }
+        if (columnName.toLowerCase().includes("mese")) continue;
+        if (col === keyindexExcel) continue; 
 
         if (typeof csvValue === 'number' && typeof ExcelData[indexRow][col] === 'number') {
-          ExcelData[indexRow][col] = ExcelData[indexRow][col] + csvValue;
+          ExcelData[indexRow][col] += csvValue;
         } else if (ExcelData[indexRow][col] != csvValue) {
           ExcelData[indexRow][col] = csvValue;
         }
       }
     }
   }
+
   return ExcelData;
 }
+
 
 //set format of the column for dates mmm-yyyy and for numbers with . for the thousands and , for the decimal part, negative number are -#### and written in red, with separators as explained before
 async function formatColumns(ExcelData, worksheet, context) {
   for (let c = 1; c < ExcelData[0].length; c++) {
     let columnName = ExcelData[0][c].toString().toLowerCase();
-    
+
     let hasDate = false;
     let hasDecimal = false;
-    
+
     for (let r = 1; r < ExcelData.length; r++) {
       let cellValue = ExcelData[r][c];
-      
+
       //date check
-      if (typeof cellValue === 'string' && /^\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}$/.test(cellValue)) { 
+      if (typeof cellValue === 'string' && /^\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}$/.test(cellValue)) {
         hasDate = true;
         break;
       }
-      
+
       //decimal check
       if (typeof cellValue === 'number' && !Number.isInteger(cellValue)) {
         hasDecimal = true;
       }
     }
-    
-    let column = worksheet.getRangeByIndexes(1, c, ExcelData.length - 1, 1); 
-    
+
+    let column = worksheet.getRangeByIndexes(1, c, ExcelData.length - 1, 1);
+
     if (hasDate) {
       column.numberFormat = [["mmm-yyyy"]];
     } else if (hasDecimal) {
       column.numberFormat = [["#,##0.00;[Red]-#,##0.00"]];
-    } 
+    }
   }
   await context.sync();
 }

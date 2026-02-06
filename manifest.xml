@@ -1,24 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="TaskPaneApp">
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" 
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" 
+           xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides" 
+           xsi:type="TaskPaneApp">
+  
   <Id>d7d49f74-b09a-479e-9006-dd9c68123560</Id>
   <Version>1.0.0.0</Version>
   <ProviderName>IngestStage</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Ing.UpdateExcelWithCsv"/>
   <Description DefaultValue="Update your excel's data with a CSV"/>
-  <IconUrl DefaultValue="https://github.com/stageIngest/UpdateExcelWithCSV/assets/VENTAGLIO-32.png"/>
-  <HighResolutionIconUrl DefaultValue="https://github.com/stageIngest/UpdateExcelWithCSV/assets/VENTAGLIO-64.png"/>
-  <SupportUrl DefaultValue="https://github.com/stageIngest/UpdateExcelWithCSV/support.txt"/>
+  
+  <!-- URL GitHub Pages -->
+  <IconUrl DefaultValue="https://stageingest.github.io/UpdateExcelWithCSV/assets/VENTAGLIO-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://stageingest.github.io/UpdateExcelWithCSV/assets/VENTAGLIO-64.png"/>
+  
+  <SupportUrl DefaultValue="https://github.com/stageIngest/UpdateExcelWithCSV"/>
+  
   <AppDomains>
-    <AppDomain>https://github.com/stageIngest/UpdateExcelWithCSV</AppDomain>
+    <AppDomain>https://stageingest.github.io</AppDomain>
   </AppDomains>
+  
   <Hosts>
     <Host Name="Workbook"/>
   </Hosts>
+  
   <DefaultSettings>
-    <SourceLocation DefaultValue="https://github.com/stageIngest/UpdateExcelWithCSV/taskpane.html"/>
+    <SourceLocation DefaultValue="https://stageingest.github.io/UpdateExcelWithCSV/taskpane.html"/>
   </DefaultSettings>
+  
   <Permissions>ReadWriteDocument</Permissions>
+  
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
     <Hosts>
       <Host xsi:type="Workbook">
@@ -60,24 +73,28 @@
         </DesktopFormFactor>
       </Host>
     </Hosts>
+    
     <Resources>
       <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="https://github.com/stageIngest/UpdateExcelWithCSV/assets/VENTAGLIO-16.png"/>
-        <bt:Image id="Icon.32x32" DefaultValue="https://github.com/stageIngest/UpdateExcelWithCSV/VENTAGLIO-32.png"/>
-        <bt:Image id="Icon.80x80" DefaultValue="https://github.com/stageIngest/UpdateExcelWithCSV/VENTAGLIO-80.png"/>
+        <bt:Image id="Icon.16x16" DefaultValue="https://stageingest.github.io/UpdateExcelWithCSV/assets/VENTAGLIO-16.png"/>
+        <bt:Image id="Icon.32x32" DefaultValue="https://stageingest.github.io/UpdateExcelWithCSV/assets/VENTAGLIO-32.png"/>
+        <bt:Image id="Icon.80x80" DefaultValue="https://stageingest.github.io/UpdateExcelWithCSV/assets/VENTAGLIO-80.png"/>
       </bt:Images>
+      
       <bt:Urls>
-        <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812"/>
-        <bt:Url id="Commands.Url" DefaultValue="https://github.com/stageIngest/UpdateExcelWithCSV/commands.html"/>
-        <bt:Url id="Taskpane.Url" DefaultValue="https://github.com/stageIngest/UpdateExcelWithCSV/taskpane.html"/>
+        <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://github.com/stageIngest/UpdateExcelWithCSV/blob/main/README.md"/>
+        <bt:Url id="Commands.Url" DefaultValue="https://stageingest.github.io/UpdateExcelWithCSV/commands.html"/>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://stageingest.github.io/UpdateExcelWithCSV/taskpane.html"/>
       </bt:Urls>
+      
       <bt:ShortStrings>
-        <bt:String id="GetStarted.Title" DefaultValue="Get started with your sample add-in!"/>
+        <bt:String id="GetStarted.Title" DefaultValue="Get started with UpdateExcelWithCsv!"/>
         <bt:String id="CommandsGroup.Label" DefaultValue="Commands Group"/>
         <bt:String id="TaskpaneButton.Label" DefaultValue="Update Excel with Csv"/>
       </bt:ShortStrings>
+      
       <bt:LongStrings>
-        <bt:String id="GetStarted.Description" DefaultValue="Your sample add-in loaded successfully. Go to the HOME tab and click the 'Update Excel with Csv' button to get started. Or find it in add-ins"/>
+        <bt:String id="GetStarted.Description" DefaultValue="Your add-in loaded successfully. Go to the HOME tab and click the 'Update Excel with Csv' button to get started."/>
         <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Click to Show Ing.UpdateExcelWithCsv"/>
       </bt:LongStrings>
     </Resources>

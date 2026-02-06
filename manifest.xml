@@ -4,10 +4,10 @@
   <Version>1.0.0.0</Version>
   <ProviderName>IngestStage</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="UpdateExcelWithCSV"/>
+  <DisplayName DefaultValue="Ing.UpdateExcelWithCsv"/>
   <Description DefaultValue="Update your excel's data with a CSV"/>
-  <IconUrl DefaultValue="https://localhost:3000/assets/UpgradeExcelWithCSV-32.png"/>
-  <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/UpgradeExcelWithCSV-64.png"/>
+  <IconUrl DefaultValue="https://localhost:3000/assets/VENTAGLIO-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/VENTAGLIO-64.png"/>
   <SupportUrl DefaultValue="https://www.contoso.com/help"/>
   <AppDomains>
     <AppDomain>https://www.contoso.com</AppDomain>
@@ -50,7 +50,7 @@
                     <bt:Image size="80" resid="Icon.80x80"/>
                   </Icon>
                   <Action xsi:type="ShowTaskpane">
-                    <TaskpaneId>ButtonId1</TaskpaneId>
+                    <TaskpaneId>UpdateExcelWithCsv</TaskpaneId>
                     <SourceLocation resid="Taskpane.Url"/>
                   </Action>
                 </Control>
@@ -62,9 +62,9 @@
     </Hosts>
     <Resources>
       <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="https://localhost:3000/assets/UpgradeExcelWithCSV-16.png"/>
-        <bt:Image id="Icon.32x32" DefaultValue="https://localhost:3000/assets/UpgradeExcelWithCSV-32.png"/>
-        <bt:Image id="Icon.80x80" DefaultValue="https://localhost:3000/assets/UpgradeExcelWithCSV-80.png"/>
+        <bt:Image id="Icon.16x16" DefaultValue="https://localhost:3000/assets/VENTAGLIO-16.png"/>
+        <bt:Image id="Icon.32x32" DefaultValue="https://localhost:3000/assets/VENTAGLIO-32.png"/>
+        <bt:Image id="Icon.80x80" DefaultValue="https://localhost:3000/assets/VENTAGLIO-80.png"/>
       </bt:Images>
       <bt:Urls>
         <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812"/>
@@ -74,11 +74,11 @@
       <bt:ShortStrings>
         <bt:String id="GetStarted.Title" DefaultValue="Get started with your sample add-in!"/>
         <bt:String id="CommandsGroup.Label" DefaultValue="Commands Group"/>
-        <bt:String id="TaskpaneButton.Label" DefaultValue="Show Task Pane"/>
+        <bt:String id="TaskpaneButton.Label" DefaultValue="Update Excel with Csv"/>
       </bt:ShortStrings>
       <bt:LongStrings>
-        <bt:String id="GetStarted.Description" DefaultValue="Your sample add-in loaded successfully. Go to the HOME tab and click the 'Show Task Pane' button to get started."/>
-        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Click to Show a Taskpane"/>
+        <bt:String id="GetStarted.Description" DefaultValue="Your sample add-in loaded successfully. Go to the HOME tab and click the 'Update Excel with Csv' button to get started. Or find it in add-ins"/>
+        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Click to Show Ing.UpdateExcelWithCsv"/>
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>

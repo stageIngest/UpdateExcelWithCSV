@@ -9,8 +9,8 @@
   <Version>1.0.0.0</Version>
   <ProviderName>IngestStage</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="Ing.UpdateExcelWithCsv"/>
-  <Description DefaultValue="Update your excel's data with a CSV"/>
+  <DisplayName DefaultValue="Ing.UpdateExcelFromCsv"/>
+  <Description DefaultValue="Update your excel's data using a CSV"/>
   
   <!-- URL GitHub Pages -->
   <IconUrl DefaultValue="https://stageingest.github.io/UpdateExcelWithCSV/assets/VENTAGLIO-32.png"/>
@@ -63,7 +63,7 @@
                     <bt:Image size="80" resid="Icon.80x80"/>
                   </Icon>
                   <Action xsi:type="ShowTaskpane">
-                    <TaskpaneId>UpdateExcelWithCsv</TaskpaneId>
+                    <TaskpaneId>UpdateExcelFromCsv</TaskpaneId>
                     <SourceLocation resid="Taskpane.Url"/>
                   </Action>
                 </Control>
@@ -88,14 +88,14 @@
       </bt:Urls>
       
       <bt:ShortStrings>
-        <bt:String id="GetStarted.Title" DefaultValue="Get started with UpdateExcelWithCsv!"/>
+        <bt:String id="GetStarted.Title" DefaultValue="Get started with UpdateExcelFromCsv!"/>
         <bt:String id="CommandsGroup.Label" DefaultValue="Commands Group"/>
-        <bt:String id="TaskpaneButton.Label" DefaultValue="Update Excel with Csv"/>
+        <bt:String id="TaskpaneButton.Label" DefaultValue="Update Excel using a Csv"/>
       </bt:ShortStrings>
       
       <bt:LongStrings>
-        <bt:String id="GetStarted.Description" DefaultValue="Your add-in loaded successfully. Go to the HOME tab and click the 'Update Excel with Csv' button to get started."/>
-        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Click to Show Ing.UpdateExcelWithCsv"/>
+        <bt:String id="GetStarted.Description" DefaultValue="Your add-in loaded successfully. Go to the HOME tab and click the 'Update Excel from Csv' button to get started."/>
+        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Click to Show Ing.UpdateExcelFromCsv"/>
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>

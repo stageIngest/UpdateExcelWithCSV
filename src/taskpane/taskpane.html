@@ -19,9 +19,6 @@
 
     <!-- Template styles -->
     <link href="taskpane.css" rel="stylesheet" type="text/css" />
-
-    <script src="taskpane.js"></script>
-
 </head>
 
 <body class="ms-font-m ms-welcome ms-Fabric">
@@ -29,15 +26,21 @@
         <img width="170" height="90" src="https://stageingest.github.io/UpdateExcelWithCSV/assets/logoIngest.png" alt="Ingest" title="Ing.UpdateExcelWithCsv" />
         <h1 class="ms-font-su">Welcome</h1>
 
-        <input type="file" id="fileInput" accept=".csv" style="display:none" />
-        <label for="fileInput" id="browse" class="ms-Button ms-Button--hero">
-            <span class="ms-Button-label">Seleziona file Csv</span>
+        <!-- BOTTONE BROWSE - UN SOLO INPUT FILE -->
+        <input type="file" id="fileInput" accept=".csv" style="display:none" multiple/>
+        <label for="fileInput" id="browse" class="ms-Button ms-Button--hero ms-font-xl" style="border: 2px solid #0078d4; padding: 10px 20px; cursor: pointer;">
+            <span class="ms-Button-label">Seleziona CSV</span>
         </label>
+
+        <div style="display: flex; align-items: center; gap: 5px; margin-top: 10px;">
+            <input type="checkbox" id="download" checked>
+            <label for="download"> -> Download file Excel? </label>
+        </div>
         <p id="fileName"></p> <!-- Qui apparirà il nome del file selezionato -->
 
-        <div role="button" id="run" class="ms-welcome__action ms-Button ms-Button--hero ms-font-xl">
-            <span class="ms-Button-label">Update File Excel</span>
-        </div>
+         <button id="run" type="button" class="ms-welcome__action ms-Button ms-Button--hero ms-font-l" style="border: 2px solid #0078d4; padding: 8px 16px;">
+            <span class="ms-Button-label">Importa file in excel</span>
+        </button>
 
     </header>
     <section id="sideload-msg" class="ms-welcome__main">
@@ -46,35 +49,31 @@
             your add-in to see app body.</h2>
     </section>
     <main id="app-body" class="ms-welcome__main" style="display: none;">
-        <h2 class="ms-font-xl"> Aggiorna i dati di un file excel esistente con quelli contenuti in un file Csv </h2>
+        <h2 class="ms-font-xl">Trascrizione automatica di file CSV</h2>
         <ul class="ms-List ms-welcome__features">
             <li class="ms-ListItem">
-                <span class="ms-font-m">1. Apri il file Excel da aggiornare</span>
+                <span class="ms-font-m">Cosa posso fare?</span>
             </li>
             <li class="ms-ListItem">
-
-                <span class="ms-font-m">2. Seleziona l'add-in UpdateExcelFromCsv</span>
+                <i class="ms-Icon ms-Icon--ExcelDocument ms-font-xl"></i>
+                <span class="ms-font-m">Supporta delimitatori: virgola (,) e punto e virgola (;)</span>
             </li>
             <li class="ms-ListItem">
-
-                <span class="ms-font-m">3. Premi Importa Csv</span>
+                <i class="ms-Icon ms-Icon--NumberField ms-font-xl"></i>
+                <span class="ms-font-m">Riconoscimento automatico dei numeri decimali</span>
             </li>
             <li class="ms-ListItem">
-
-                <span class="ms-font-m">4. Seleziona il file Csv che vuoi utilizzare e conferma</span>
+                <span class="ms-font-m">Come usare l'add-in CsvToExcel?</span>
+            </li>
+             <li class="ms-ListItem">
+                <span class="ms-font-m">1. Apri un nuovo file Excel</span>
             </li>
             <li class="ms-ListItem">
-
-                <span class="ms-font-m">5. Premi Update</span>
+                <span class="ms-font-m">2. Apri l'add-in CsvToExcel</span>
             </li>
-        </ul>
-        <p class="ms-font-l"> Quando è tutto pronto, premi <b>Update</b>.</p>
-        <div id="loading" style="display: none;">Processing...</div>
-        <div role="button" id="run" class="ms-welcome__action ms-Button ms-Button--hero ms-font-xl">
-            <span class="ms-Button-label">Update file Excel</span>
-        </div>
-        <p><label id="item-subject"></label></p>
-    </main>
-</body>
-
-</html>
+            <li class="ms-ListItem">
+                <span class="ms-font-m">3. Premi Importa CSV</span>
+            </li>
+            <li class="ms-ListItem">
+                <span class="ms-font-m">4. Seleziona uno o più file CSV che vuoi importare e conferma</span>
+            </li>

@@ -8,7 +8,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>UpdateExcelFromCsv</title>
+    <title>UpdateExcelWithCsv</title>
 
     <!-- Office JavaScript API -->
     <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
@@ -33,15 +33,10 @@
         <label for="fileInput" id="browse" class="ms-Button ms-Button--hero ms-font-xl" style="border: 2px solid #0078d4; padding: 10px 20px; cursor: pointer;">
             <span class="ms-Button-label">Seleziona CSV</span>
         </label>
-
-        <div style="display: flex; align-items: center; gap: 5px; margin-top: 10px;">
-            <input type="checkbox" id="download" checked>
-            <label for="download"> -> Download file Excel? </label>
-        </div>
         <p id="fileName"></p> <!-- Qui apparirà il nome del file selezionato -->
 
          <button id="run" type="button" class="ms-welcome__action ms-Button ms-Button--hero ms-font-l" style="border: 2px solid #0078d4; padding: 8px 16px;">
-            <span class="ms-Button-label">Importa file in excel</span>
+            <span class="ms-Button-label">Update Excel con Csv</span>
         </button>
 
     </header>
@@ -51,31 +46,39 @@
             your add-in to see app body.</h2>
     </section>
     <main id="app-body" class="ms-welcome__main" style="display: none;">
-        <h2 class="ms-font-xl">Trascrizione automatica di file CSV</h2>
+         <h2 class="ms-font-xl"> Aggiorna i dati di un file excel esistente con quelli contenuti in un file Csv </h2>
         <ul class="ms-List ms-welcome__features">
             <li class="ms-ListItem">
-                <span class="ms-font-m">Cosa posso fare?</span>
+                <span class="ms-font-m">1. Apri il file Excel da aggiornare</span>
             </li>
             <li class="ms-ListItem">
-                <i class="ms-Icon ms-Icon--ExcelDocument ms-font-xl"></i>
-                <span class="ms-font-m">Supporta delimitatori: virgola (,) e punto e virgola (;)</span>
+
+                <span class="ms-font-m">2. Seleziona l'add-in UpdateExcelFromCsv</span>
             </li>
             <li class="ms-ListItem">
-                <i class="ms-Icon ms-Icon--NumberField ms-font-xl"></i>
-                <span class="ms-font-m">Riconoscimento automatico dei numeri decimali</span>
+
+                <span class="ms-font-m">3. Premi Importa Csv</span>
             </li>
             <li class="ms-ListItem">
-                <span class="ms-font-m">Come usare l'add-in CsvToExcel?</span>
-            </li>
-             <li class="ms-ListItem">
-                <span class="ms-font-m">1. Apri un nuovo file Excel</span>
+
+                <span class="ms-font-m">4. Seleziona il file Csv che vuoi utilizzare e conferma</span>
             </li>
             <li class="ms-ListItem">
-                <span class="ms-font-m">2. Apri l'add-in CsvToExcel</span>
+
+                <span class="ms-font-m">5. Premi Update</span>
             </li>
-            <li class="ms-ListItem">
-                <span class="ms-font-m">3. Premi Importa CSV</span>
-            </li>
-            <li class="ms-ListItem">
-                <span class="ms-font-m">4. Seleziona uno o più file CSV che vuoi importare e conferma</span>
-            </li>
+        </ul>
+        <p class="ms-font-l"> Quando è tutto pronto, premi <b>Update</b>.</p>
+        <div id="loading" style="display: none;">Processing...</div>
+        <button class="run-button ms-welcome__action ms-Button ms-Button--hero ms-font-xl" type="button" style="border: 2px solid #0078d4; padding: 8px 16px;">
+            <span class="ms-Button-label">Update Excel con Csv</span>
+        </button>
+        
+        <p><label id="item-subject"></label></p>
+    </main>
+
+    <button id="run" type="button" class="ms-welcome__action ms-Button ms-Button--hero ms-font-l" style="border: 2px solid #0078d4; padding: 8px 16px;">
+            <span class="ms-Button-label">Update Excel con Csv</span>
+        </button>
+</body>
+

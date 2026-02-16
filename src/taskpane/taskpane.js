@@ -174,7 +174,6 @@ function findInExcel(FormattedCSV, ExcelData) {
         let columnName = ExcelData[0][col];
         if (columnName.toLowerCase().includes("mese")) {
           ExcelData[indexRow][col] = csvValue; 
-        
         }
         if (col === keyindexExcel) continue;
 

@@ -217,17 +217,12 @@ async function formatColumns(ExcelData, worksheet, context, FormattedCSV) {
       column.numberFormat = [["#,##0.00;[Red]-#,##0.00"]];
     }
     else if (hasDate) {
-      let csvData;
-      for (let rowNo = 1; rowNo < ExcelData.length; rowNo ++) {
-        if (FormattedCSV[rowNo][c] != "") {
-        ExcelData[rowNo][c] = FormattedCSV[rowNo][c];
-        csvData = FormattedCSV[rowNo][c]
-        ExcelData[rowNo][c].numberFormat = [["@"]];
-        }
-        else {
-          ExcelData[rowNo][c] = csvData;
-        }
-      }  
+      let csvData = FormattedCSV[1][c];
+      for (let rowNo = 1; rowNo < ExcelData.length; rowNo++) {
+        ExcelData[rowNo][c] = csvData;
+      }
+      column.values = ExcelData.slice(1).map(row => [row[c]]);
+      column.numberFormat = [["@"]];
     }
     
   }

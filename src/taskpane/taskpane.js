@@ -204,7 +204,7 @@ async function formatColumns(ExcelData, worksheet, context, FormattedCSV) {
       if (typeof cellValue === 'number' && !Number.isInteger(cellValue)) {
         hasDecimal = true;
       }
-      else if (typeof cellValue === 'string' && /^\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}$/.test(cellValue)) {
+      else if (typeof cellValue === 'string' && (columnName.includes("mese") || columnName.includes("data"))) {
         hasDate = true;
         break;
       }
@@ -216,14 +216,35 @@ async function formatColumns(ExcelData, worksheet, context, FormattedCSV) {
     if (hasDecimal) {
       column.numberFormat = [["#,##0.00;[Red]-#,##0.00"]];
     }
-    else if (hasDate) {
-      let csvData = FormattedCSV[1][c];
-      for (let rowNo = 1; rowNo < ExcelData.length; rowNo++) {
-        ExcelData[rowNo][c] = csvData;
-      }
-      column.values = ExcelData.slice(1).map(row => [row[c]]);
-      column.numberFormat = [["@"]];
+   else if (hasDate) {
+
+  // 1️⃣ Trova l'indice della colonna data nel CSV
+  let keyindexCSV = TakeKeyColumn(FormattedCSV);
+  let headerCSV = FormattedCSV[0];
+
+  let dateColumnIndex = -1;
+
+  for (let i = 0; i < headerCSV.length; i++) {
+    let name = headerCSV[i].toString().toLowerCase();
+    if (name.includes("data") || name.includes("mese")) {
+      dateColumnIndex = i;
+      break;
     }
+  }
+
+  if (dateColumnIndex === -1) return;
+
+  let csvDate = FormattedCSV[1][dateColumnIndex];
+  let columnRange = worksheet.getRangeByIndexes(1, c, ExcelData.length - 1, 1);
+
+  let valuesToWrite = [];
+  for (let r = 1; r < ExcelData.length; r++) {
+    valuesToWrite.push([csvDate]);
+  }
+  columnRange.values = valuesToWrite;
+  columnRange.numberFormat = [["@"]];
+}
+
     
   }
   await context.sync();

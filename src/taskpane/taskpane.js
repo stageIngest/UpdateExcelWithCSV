@@ -173,8 +173,8 @@ function findInExcel(FormattedCSV, ExcelData) {
         let csvValue = FormattedCSV[csv + 1][col];
         let columnName = ExcelData[0][col];
         if (columnName.toLowerCase().includes("mese")) {
-          ExcelData[indexRow][col] = csvValue;  // ✅ Sovrascrivi solo questa cella
-          continue;  // Opzionale: salta il resto del loop per questa colonna
+          ExcelData[indexRow][col] = csvValue; 
+        
         }
         if (col === keyindexExcel) continue;
 

@@ -218,8 +218,11 @@ async function formatColumns(ExcelData, worksheet, context, FormattedCSV) {
     }
     else if (hasDate) {
       for (let rowNo = 1; row < ExcelData.length; rowNo ++) {
+        if (FormattedCSV[rowNo][c] != "") {
         ExcelData[rowNo][c] = FormattedCSV[rowNo][c];
-        ExcelData[rowNo][c].numberFormat = [["@"]];
+        ExcelData[rowNo][c].numberFormat = [["mmm-yyyy"]];
+        }
+
       }  
     }
     

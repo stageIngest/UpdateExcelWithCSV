@@ -7,6 +7,7 @@ let ColumnKeyName = "";
 
 Office.onReady((info) => {
   if (info.host === Office.HostType.Excel) {
+
     document.getElementById("sideload-msg").style.display = "none";
     document.getElementById("app-body").style.display = "flex";
 
@@ -159,21 +160,23 @@ function findInExcel(FormattedCSV, ExcelData) {
   let keyindexCSV = TakeKeyColumn(FormattedCSV);
   let keyindexExcel = TakeKeyColumn(ExcelData);
 
-  let firstColumnCSV = FormattedCSV.slice(1).map(row => row[keyindexCSV]);
-  let firstColumnExcel = ExcelData.slice(1).map(row => row[keyindexExcel]);
+  let keyColumnCSV = FormattedCSV.slice(1).map(row => row[keyindexCSV]);
+  let keyColumnExcel = ExcelData.slice(1).map(row => row[keyindexExcel]);
 
-  for (let csv = 0; csv < firstColumnCSV.length; csv++) {
-    let excelRowIndex = firstColumnExcel.indexOf(firstColumnCSV[csv]);
+  for (let csv = 0; csv < keyColumnCSV.length; csv++) {
+    let excelRowIndex = keyColumnExcel.indexOf(keyColumnCSV[csv]);
 
     if (excelRowIndex !== -1) {
-      let indexRow = excelRowIndex + 1; 
+      let indexRow = excelRowIndex + 1;
 
       for (let col = 0; col < ExcelData[0].length; col++) {
-        let csvValue = FormattedCSV[csv + 1][col]; 
+        let csvValue = FormattedCSV[csv + 1][col];
         let columnName = ExcelData[0][col];
-
-        if (columnName.toLowerCase().includes("mese")) continue;
-        if (col === keyindexExcel) continue; 
+        if (columnName.toLowerCase().includes("mese")) {
+          ExcelData[indexRow][col] = csvValue;  // ✅ Sovrascrivi solo questa cella
+          continue;  // Opzionale: salta il resto del loop per questa colonna
+        }
+        if (col === keyindexExcel) continue;
 
         if (typeof csvValue === 'number' && typeof ExcelData[indexRow][col] === 'number') {
           ExcelData[indexRow][col] += csvValue;
@@ -190,7 +193,7 @@ function findInExcel(FormattedCSV, ExcelData) {
 
 //set format of the column for dates mmm-yyyy and for numbers with . for the thousands and , for the decimal part, negative number are -#### and written in red, with separators as explained before
 async function formatColumns(ExcelData, worksheet, context) {
-  for (let c = 1; c < ExcelData[0].length; c++) {
+  for (let c = 0; c < ExcelData[0].length; c++) {
     let columnName = ExcelData[0][c].toString().toLowerCase();
 
     let hasDate = false;

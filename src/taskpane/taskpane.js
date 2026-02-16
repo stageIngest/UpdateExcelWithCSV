@@ -172,8 +172,8 @@ function findInExcel(FormattedCSV, ExcelData) {
       for (let col = 0; col < ExcelData[0].length; col++) {
         let csvValue = FormattedCSV[csv + 1][col];
         let columnName = ExcelData[0][col];
-        if (columnName.toLowerCase().includes("mese")) {
-          ExcelData[indexRow][col] = csvValue; 
+        if (columnName.toLowerCase().includes("mese") || (columnName.toLowerCase().includes("data"))) {
+          ExcelData[indexRow][col] = csvValue;
         }
         if (col === keyindexExcel) continue;
 
@@ -201,12 +201,6 @@ async function formatColumns(ExcelData, worksheet, context) {
     for (let r = 1; r < ExcelData.length; r++) {
       let cellValue = ExcelData[r][c];
 
-      //date check
-      if (typeof cellValue === 'string' && /^\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}$/.test(cellValue)) {
-        hasDate = true;
-        break;
-      }
-
       //decimal check
       if (typeof cellValue === 'number' && !Number.isInteger(cellValue)) {
         hasDecimal = true;
@@ -215,9 +209,7 @@ async function formatColumns(ExcelData, worksheet, context) {
 
     let column = worksheet.getRangeByIndexes(1, c, ExcelData.length - 1, 1);
 
-    if (hasDate) {
-      column.numberFormat = [["mmm-yyyy"]];
-    } else if (hasDecimal) {
+    if (hasDecimal) {
       column.numberFormat = [["#,##0.00;[Red]-#,##0.00"]];
     }
   }

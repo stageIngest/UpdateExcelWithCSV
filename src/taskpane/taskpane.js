@@ -185,12 +185,11 @@ function findInExcel(FormattedCSV, ExcelData) {
       }
     }
   }
-
   return ExcelData;
 }
 
 
-//set format of the column for dates mmm-yyyy and for numbers with . for the thousands and , for the decimal part, negative number are -#### and written in red, with separators as explained before
+//set format of the column for numbers with . for the thousands and , for the decimal part, negative number are -#### and written in red, with separators as explained before
 async function formatColumns(ExcelData, worksheet, context) {
   for (let c = 0; c < ExcelData[0].length; c++) {
     let columnName = ExcelData[0][c].toString().toLowerCase();
@@ -205,6 +204,11 @@ async function formatColumns(ExcelData, worksheet, context) {
       if (typeof cellValue === 'number' && !Number.isInteger(cellValue)) {
         hasDecimal = true;
       }
+      else if (typeof cellValue === 'string' && /^\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}$/.test(cellValue)) {
+        hasDate = true;
+        break;
+      }
+
     }
 
     let column = worksheet.getRangeByIndexes(1, c, ExcelData.length - 1, 1);
@@ -212,6 +216,10 @@ async function formatColumns(ExcelData, worksheet, context) {
     if (hasDecimal) {
       column.numberFormat = [["#,##0.00;[Red]-#,##0.00"]];
     }
+    else if (hasDate) {
+      column.numberFormat = [["@"]]; //set come stringa della cella (così passa nel doppio controllo)
+    }
+    
   }
   await context.sync();
 }
